@@ -12,6 +12,7 @@
         <Image x:Key="save" Source="Resources/save_96px.png"/>
         <Image x:Key="save_as" Source="Resources/save_as_96px.png"/>
         <Image x:Key="search" Source="Resources/search_96px.png"/>
+        <Image x:Key="closeSave" Source="Resources/close_window_96px.png"/>
     </Window.Resources>
 
     <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="935" Height="634" VerticalAlignment="Top">

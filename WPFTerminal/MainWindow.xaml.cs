@@ -210,6 +210,7 @@ namespace WPFTerminal
         }
         private void bunifuImageButton_StartStop_Click(object sender, EventArgs e)
         {
+            Button button = sender as Button;
             if (comboBox_PortNum.Items.Count < 1)
             {
                 const string message =
@@ -223,17 +224,17 @@ namespace WPFTerminal
             }
 
 
-            if (button_StartStop.Tag.ToString() == "Start")
+            if (button.Tag.ToString() == "Start")
             {
                 readThread = new Thread(comport_DataReceived);
                 serial_OPEN();
                 try
                 {
                     _serialPort.Open();//開啟serial
-                    button_StartStop.Tag = "Stop";
+                    button.Tag = "Stop";
                     Image image1 = new Image();
                     image1.Source = new BitmapImage(new Uri(@"Resources/pause_96px.png", UriKind.Relative));
-                    button_StartStop.Content = image1;
+                    button.Content = image1;
 
                     //button_StartStop.Background = new SolidColorBrush(Colors.Black);
                     _continue = true;
@@ -247,7 +248,7 @@ namespace WPFTerminal
                 }
 
             }
-            else if (button_StartStop.Tag.ToString() == "Stop")
+            else if (button.Tag.ToString() == "Stop")
             {
                 _continue = false;//停止thread
                 _serialPort.Close();//關閉serial port
@@ -255,10 +256,10 @@ namespace WPFTerminal
                 if (WriteLog != null)
                     WriteLog.Close();
 
-                button_StartStop.Tag = "Start";
+                button.Tag = "Start";
                 Image image1 = new Image();
                 image1.Source = new BitmapImage(new Uri(@"Resources/play_96px.png", UriKind.Relative));
-                button_StartStop.Content = image1;
+                button.Content = image1;
 
                 if (readThread != null)
                     readThread.Abort();
@@ -295,21 +296,26 @@ namespace WPFTerminal
         StreamWriter WriteLog;
         private void bunifuImageButton_SaveLog_Click(object sender, EventArgs e)
         {
-
-            if (button_SaveLog.Tag.ToString() == "SaveStart")
+            Button button = sender as Button;
+            if (button.Tag.ToString() == "SaveStart")
             {
                 if (SaveFile() == true)
                 {
-                    button_SaveLog.Tag = "SaveStop";
-                    
-                    button_SaveLog.OpacityMask = new ImageBrush(new BitmapImage(new Uri("pack://siteoforigin:,,,/Resources/close_window_96px.png")));
+                    button.Tag = "SaveStop";
+
+                    Image image1 = new Image();
+                    image1.Source = new BitmapImage(new Uri(@"Resources/close_window_96px.png", UriKind.Relative));
+                    button.Content = image1;
+
                     WriteLog = new StreamWriter(File.Open(saveFile.FileName, FileMode.Create));
                 }
             }
-            else if (button_SaveLog.Tag.ToString() == "SaveStop")
+            else if (button.Tag.ToString() == "SaveStop")
             {
-                button_SaveLog.Tag = "SaveStart";                
-                button_SaveLog.OpacityMask = new ImageBrush(new BitmapImage(new Uri("pack://siteoforigin:,,,/Resources/save_as_96px.png")));
+                button.Tag = "SaveStart";
+                Image image1 = new Image();
+                image1.Source = new BitmapImage(new Uri(@"Resources/save_as_96px.png", UriKind.Relative));
+                button.Content = image1;
                 WriteLog.Close();
                 WriteLog = null;
             }
