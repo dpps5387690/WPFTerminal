@@ -134,9 +134,6 @@ namespace WPFTerminal
             InitSerialPortNum();
             comboBox_Speed.SelectedIndex = 6;
             HotKey_Init();
-            //debug panel1.MakeDoubleBuffered(true);
-            //debug panel4.MakeDoubleBuffered(true);
-            //richTextBox_View.MakeDoubleBuffered(true);
 
             //string str1 = "tCL\ttRCD/tRP\ttRAS\ttWR\ttCWL\ttRRD_S\ttRRD_L\ttWTR_S\ttWTR_L\ttRFC\ttRFC2\ttRFC4\ttRTP\ttFAW\tCMD_stretch\t\n";
             //string str2 = "19\t26\t46\t24\t18\t9\t14\t3\t8\t842\t278\t171\t12\t53\t1\n";
@@ -334,82 +331,120 @@ namespace WPFTerminal
                 readThread.Abort();
         }
         #region search
-        TextRange foundRange = null;
-        private void ShowFind()
+        /// <summary>
+        /// Takes a string input and searches richtextbox in the direction specified.  
+        /// </summary>
+        private void SelectWord(string input, LogicalDirection direction)
         {
-            TextPointer Start = richTextBox_View.Document.ContentStart;
-            TextPointer End = richTextBox_View.Document.ContentEnd;
+            RichTextBox rtb = richTextBox_View; //the name of your richtextbox control
 
-            TextRange initRange = new TextRange(Start, End);
-            initRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.White));
-
-            if (foundRange != null)
+            TextPointer currentStartposition = rtb.Selection.Start;
+            TextPointer currentEndposition = rtb.Selection.End;
+            TextPointer position;
+            TextPointer previousPosition;
+            string textLine = null;
+            if (direction == LogicalDirection.Forward)
             {
-                Start = foundRange.End;
-            }
-
-            TextRange searchRange = new TextRange(Start, End);
-            foundRange = FindTextInRange(searchRange, TextBox_Find.Text);
-
-            if (foundRange == null)
-            {
-                MessageBox.Show("Not find.");
+                position = currentStartposition.GetLineStartPosition(1);
+                previousPosition = currentEndposition;
+                if (position != null)
+                    textLine = new TextRange(previousPosition, position).Text;
             }
             else
             {
-                foundRange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Yellow));
-                richTextBox_View.Focus();
+                position = currentStartposition.GetLineStartPosition(0);
+                previousPosition = currentStartposition;
+                if (position != null)
+                    textLine = new TextRange(position, previousPosition).Text;
             }
 
-        }
-        public TextRange FindTextInRange(TextRange searchRange, string searchText)
-        {
-            int offset = searchRange.Text.IndexOf(searchText, StringComparison.OrdinalIgnoreCase);
-            if (offset < 0)
-                return null;  // Not found
-
-            var start = GetTextPositionAtOffset(searchRange.Start, offset);
-            TextRange result = new TextRange(start, GetTextPositionAtOffset(start, searchText.Length));
-
-            return result;
-        }
-
-        TextPointer GetTextPositionAtOffset(TextPointer position, int characterCount)
-        {
             while (position != null)
             {
-                if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
-                {
-                    int count = position.GetTextRunLength(LogicalDirection.Forward);
-                    if (characterCount <= count)
-                    {
-                        return position.GetPositionAtOffset(characterCount);
-                    }
+                int indexInRun;
+                if (direction == LogicalDirection.Forward)
+                    indexInRun = textLine.IndexOf(input, StringComparison.CurrentCultureIgnoreCase);
+                else
+                    indexInRun = textLine.LastIndexOf(input, StringComparison.CurrentCultureIgnoreCase);
 
-                    characterCount -= count;
+                if (indexInRun >= 0)
+                {
+                    TextPointer nextPointer = null;
+                    if (direction == LogicalDirection.Forward)
+                        position = previousPosition;
+
+                    int inputLength = input.Length;
+                    while (nextPointer == null)
+                    {
+                        if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text && nextPointer == null) //checks to see if textpointer is actually text
+                        {
+                            string textRun = position.GetTextInRun(LogicalDirection.Forward);
+                            if (textRun.Length - 1 < indexInRun)
+                                indexInRun -= textRun.Length;
+                            else //found the start position of text pointer
+                            {
+                                position = position.GetPositionAtOffset(indexInRun);
+                                nextPointer = position;
+                                while (inputLength > 0)
+                                {
+                                    textRun = nextPointer.GetTextInRun(LogicalDirection.Forward);
+                                    if (textRun.Length - indexInRun < inputLength)
+                                    {
+                                        inputLength -= textRun.Length;
+                                        indexInRun = 0; //after the first pass, index in run is no longer relevant
+                                    }
+                                    else
+                                    {
+                                        nextPointer = nextPointer.GetPositionAtOffset(inputLength);
+                                        rtb.Selection.Select(position, nextPointer);
+                                        rtb.Focus();
+
+                                        //moves the scrollbar to the selected text
+                                        Rect r = position.GetCharacterRect(LogicalDirection.Forward);
+                                        double totaloffset = r.Top + rtb.VerticalOffset;
+                                        rtb.ScrollToVerticalOffset(totaloffset - rtb.ActualHeight / 2);
+                                        return; //word is selected and scrolled to. Exit method
+                                    }
+                                    nextPointer = nextPointer.GetNextContextPosition(LogicalDirection.Forward);
+                                }
+
+
+                            }
+                        }
+                        position = position.GetNextContextPosition(LogicalDirection.Forward);
+                    }
                 }
 
-                TextPointer nextContextPosition = position.GetNextContextPosition(LogicalDirection.Forward);
-                if (nextContextPosition == null)
-                    return position;
+                previousPosition = position;
+                if (direction == LogicalDirection.Forward)
+                {
+                    position = position.GetLineStartPosition(1);
+                    if (position != null)
+                        textLine = new TextRange(previousPosition, position).Text;
+                }
+                else
+                {
+                    position = position.GetLineStartPosition(-1);
+                    if (position != null)
+                        textLine = new TextRange(position, previousPosition).Text;
+                }
 
-                position = nextContextPosition;
             }
 
-            return position;
+            //if next/previous word is not found, leave the current selected word selected
+            rtb.Selection.Select(currentStartposition, currentEndposition);
+            rtb.Focus();
         }
+
         private void FindNext()
         {
-            richTextBox_View.SelectionBrush = Brushes.White;
-            //debug selectionStart = richTextBox_View.Find(underLineTextBox_Find.Text, selectionStop, richTextBox_View.TextLength, RichTextBoxFinds.None);
-            ShowFind();
+            //richTextBox_View.SelectionBrush = Brushes.White;
+            SelectWord(TextBox_Find.Text, LogicalDirection.Forward);
         }
 
         private void FindPrevious()
         {
-            richTextBox_View.SelectionBrush = Brushes.White;
-            //debug selectionStart = richTextBox_View.Find(underLineTextBox_Find.Text, 0, selectionStart, RichTextBoxFinds.Reverse);
-            ShowFind();
+            //richTextBox_View.SelectionBrush = Brushes.White;
+            SelectWord(TextBox_Find.Text, LogicalDirection.Backward);
         }
         #endregion
 
@@ -427,15 +462,5 @@ namespace WPFTerminal
         }
 
 
-    }
-    public static class ControlExtentions
-    {
-        public static void MakeDoubleBuffered(this Control control, bool setting)
-        {
-            Type controlType = control.GetType();
-            PropertyInfo pi = controlType.GetProperty("DoubleBuffered",
-            BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(control, setting, null);
-        }
     }
 }
