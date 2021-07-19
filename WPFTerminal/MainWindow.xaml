@@ -2,7 +2,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Properties="clr-namespace:WPFTerminal.Properties" mc:Ignorable="d" x:Class="WPFTerminal.MainWindow"
-	Title="Serial Port Terminal" Height="677.144" Width="954.349" Closed="Window_Closed" KeyDown="Window_KeyDown" Loaded="Window_Loaded" FontFamily="Calibri">
+	Title="Serial Port Terminal" Height="585.644" Width="768.349" Closed="Window_Closed" KeyDown="Window_KeyDown" Loaded="Window_Loaded" FontFamily="Calibri">
 
     <Window.Resources>
         <Image x:Key="play" Source="Resources/play_96px.png"/>
@@ -15,23 +15,21 @@
         <Image x:Key="closeSave" Source="Resources/close_window_96px.png"/>
     </Window.Resources>
 
-    <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="935" Height="634" VerticalAlignment="Top">
+    <Grid Margin="10,10,1,2">
         <Grid.RowDefinitions>
-            <RowDefinition Height="421*"/>
-            <RowDefinition Height="253*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <RichTextBox x:Name="richTextBox_View" Height="554" TabIndex="0" VerticalAlignment="Top" IsReadOnly="True" Grid.ColumnSpan="2" Margin="0,70,0,0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="925" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AcceptsTab="True" FontSize="16" >
+        <RichTextBox x:Name="richTextBox_View" TabIndex="0" IsReadOnly="True" Margin="0,70,0,0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AcceptsTab="True" FontSize="16" >
             <FlowDocument PagePadding="5,0" PageWidth="4100" LineHeight="1">
                 <Paragraph>
                     <Run/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <ComboBox x:Name="comboBox_Speed" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.319,0.778" Margin="0,0,547,332" >
+        <ComboBox x:Name="comboBox_Speed" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.319,0.778" Margin="0,37,0,0" >
             <ComboBoxItem Content="300"/>
             <ComboBoxItem Content="2400"/>
             <ComboBoxItem Content="4800"/>
@@ -41,14 +39,14 @@
             <ComboBoxItem Content="57600"/>
             <ComboBoxItem Content="115200"/>
         </ComboBox>
-        <ComboBox x:Name="comboBox_PortNum" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,547,364" />
-        <CheckBox x:Name="checkBox_ENdLine" Height="23" Width="81" TabIndex="14" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="ENdLine" Grid.ColumnSpan="2" Margin="0,0,267,336" IsChecked="True" />
-        <Button x:Name="button_SaveLog" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_SaveLog_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,313,332" Content="{StaticResource save_as}" Tag="SaveStart"/>
-        <Button x:Name="button_Find" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Find_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,138,331" Content="{StaticResource search}"/>
-        <Button x:Name="button_Clear" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Clear_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,83,331" Content="{StaticResource broom}" />
-        <Button x:Name="button_Save" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Save_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,368,332" Content="{StaticResource save}" />
-        <Button x:Name="button_ReFresh" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_ReFresh_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,422,332" Background="Gray"  Content="{StaticResource refresh}" />
-        <Button x:Name="button_StartStop" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_StartStop_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Gray" Tag="Start" Margin="0,0,473,332" Content="{StaticResource play}" />
+        <ComboBox x:Name="comboBox_PortNum" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
+        <CheckBox x:Name="checkBox_ENdLine" Height="23" Width="81" TabIndex="14" HorizontalAlignment="Left" VerticalAlignment="Top" Content="ENdLine" Margin="587,37,0,0" IsChecked="True" />
+        <Button x:Name="button_SaveLog" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_SaveLog_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="278,14,0,0" Content="{StaticResource save_as}" Tag="SaveStart"/>
+        <Button x:Name="button_Find" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Find_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="453,15,0,0" Content="{StaticResource search}"/>
+        <Button x:Name="button_Clear" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Clear_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="508,15,0,0" Content="{StaticResource broom}" />
+        <Button x:Name="button_Save" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Save_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,14,0,0" Content="{StaticResource save}" />
+        <Button x:Name="button_ReFresh" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_ReFresh_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="169,14,0,0" Background="Gray"  Content="{StaticResource refresh}" />
+        <Button x:Name="button_StartStop" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_StartStop_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Gray" Tag="Start" Margin="118,14,0,0" Content="{StaticResource play}" />
         <TextBox x:Name="TextBox_Find" HorizontalAlignment="Left" Height="23" Margin="333,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Background="White" FontFamily="Calibri"/>
     </Grid>
 </Window>
