@@ -29,7 +29,7 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <ComboBox x:Name="comboBox_Speed" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.319,0.778" Margin="0,37,0,0" >
+        <ComboBox x:Name="comboBox_Speed" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.319,0.778" Margin="0,37,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
             <ComboBoxItem Content="300"/>
             <ComboBoxItem Content="2400"/>
             <ComboBoxItem Content="4800"/>
@@ -39,7 +39,7 @@
             <ComboBoxItem Content="57600"/>
             <ComboBoxItem Content="115200"/>
         </ComboBox>
-        <ComboBox x:Name="comboBox_PortNum" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
+        <ComboBox x:Name="comboBox_PortNum" Height="27" Width="94" TabIndex="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" />
         <CheckBox x:Name="checkBox_ENdLine" Height="23" Width="81" TabIndex="14" HorizontalAlignment="Left" VerticalAlignment="Top" Content="ENdLine" Margin="587,37,0,0" IsChecked="True" />
         <Button x:Name="button_SaveLog" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_SaveLog_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="278,14,0,0" Content="{StaticResource save_as}" Tag="SaveStart"/>
         <Button x:Name="button_Find" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Find_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="453,15,0,0" Content="{StaticResource search}"/>

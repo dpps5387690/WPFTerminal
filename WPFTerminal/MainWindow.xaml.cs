@@ -69,10 +69,9 @@ namespace WPFTerminal
             new HotKeyClass("Save Log for View",102,ModifierKeys.Control,Key.S,"button_Save"),
             new HotKeyClass("Save Log Start",103,ModifierKeys.Alt,Key.D,"button_SaveLog"),
             new HotKeyClass("Search",104,ModifierKeys.None,Key.F3,"button_Find"),
-            new HotKeyClass("Clear View",105,ModifierKeys.Control,Key.X,"button_Clear"),
+            new HotKeyClass("Clear View",105,ModifierKeys.Control,Key.D,"button_Clear"),
             //bunifuMaterialTextbox
-            new HotKeyClass("Search Text",106,ModifierKeys.Control,Key.F,"underLineTextBox_Find"),
-
+            new HotKeyClass("Search Text",106,ModifierKeys.Control,Key.F,"TextBox_Find"),
             new HotKeyClass("Search Previous",107,ModifierKeys.Shift,Key.F3,"Previous"),
         };
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -83,18 +82,14 @@ namespace WPFTerminal
             if (hotKeyClass.ControlName.Contains("button"))
             {
                 object nowtb = FindName(hotKeyClass.ControlName);
-                Button tileButton = null;
-            
-                tileButton = nowtb as Button;
+                Button tileButton = nowtb as Button;
                 callButtonEvent(tileButton, Button.ClickEvent);
             }
-            else if (hotKeyClass.ControlName.Contains("underLineTextBox"))
+            else if (hotKeyClass.ControlName.Contains("TextBox"))
             {
                 object nowtb;
                 nowtb = FindName(hotKeyClass.ControlName);
-                TextBox textbox = null;
-            
-                textbox = nowtb as TextBox;
+                TextBox textbox = nowtb as TextBox;
                 textbox.Focus();
             }
             else if (hotKeyClass.ControlName == "Previous")
