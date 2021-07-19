@@ -284,6 +284,12 @@ namespace WPFTerminal
             if (SaveFile() == true)
             {
                 //debug richTextBox_View.SaveFile(saveFile.FileName, RichTextBoxStreamType.PlainText);
+                TextRange range;
+                FileStream fStream;
+                range = new TextRange(richTextBox_View.Document.ContentStart, richTextBox_View.Document.ContentEnd);
+                fStream = new FileStream(saveFile.FileName, FileMode.Create);
+                range.Save(fStream, DataFormats.Text);
+                fStream.Close();
             }
         }
         StreamWriter WriteLog;
