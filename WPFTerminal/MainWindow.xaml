@@ -23,7 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <RichTextBox x:Name="richTextBox_View" TabIndex="0" IsReadOnly="True" Margin="0,70,0,0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AcceptsTab="True" FontSize="16" >
+        <RichTextBox x:Name="richTextBox_View" TabIndex="0" Margin="0,70,0,0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" AcceptsTab="True" FontSize="16" >
             <FlowDocument PagePadding="5,0" PageWidth="4100" LineHeight="1">
                 <Paragraph>
                     <Run/>
