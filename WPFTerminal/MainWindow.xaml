@@ -48,6 +48,6 @@
         <Button x:Name="button_Save" Height="50" Width="50" TabIndex="12" Background="Gray" Click="bunifuImageButton_Save_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,14,0,0" Content="{StaticResource save}" />
         <Button x:Name="button_ReFresh" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_ReFresh_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="169,14,0,0" Background="Gray"  Content="{StaticResource refresh}" />
         <Button x:Name="button_StartStop" Height="50" Width="50" TabIndex="12" Click="bunifuImageButton_StartStop_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Gray" Tag="Start" Margin="118,14,0,0" Content="{StaticResource play}" />
-        <TextBox x:Name="TextBox_Find" HorizontalAlignment="Left" Height="23" Margin="333,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Background="White" FontFamily="Calibri"/>
+        <TextBox x:Name="TextBox_Find" HorizontalAlignment="Left" Height="23" Margin="333,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Background="White" FontFamily="Calibri" KeyDown="bunifuMaterialTextbox_Find_KeyDown"/>
     </Grid>
 </Window>
