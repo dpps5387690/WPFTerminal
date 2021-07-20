@@ -83,6 +83,16 @@ namespace WPFTerminal.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        public static System.Drawing.Bitmap log_512 {
+            get {
+                object obj = ResourceManager.GetObject("log_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         public static System.Drawing.Bitmap pause_96px {
             get {
                 object obj = ResourceManager.GetObject("pause_96px", resourceCulture);
